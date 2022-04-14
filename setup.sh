@@ -7,3 +7,4 @@
 # Eg:- For Python Project;
 #       pip install -r requirements.txt
 # Eg:- Run a shell script or bash commands to seed the data into the database.
+npm install

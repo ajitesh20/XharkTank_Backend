@@ -7,3 +7,4 @@
 # Eg:- For Python Flask Project
 #       export FLASK_APP=main.py
 #       flask run
+npm start
