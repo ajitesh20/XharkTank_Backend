@@ -3,6 +3,10 @@ let mongoose = require('mongoose');
 // defining a pitch schema for the database
 // also helps in carrying out the checks for fields in request object
 let pitchSchema = new mongoose.Schema({
+    pitched_at: {
+        type: Date,
+        default: Date.now
+    },
     entrepreneur: {
         type: String,
         required: true

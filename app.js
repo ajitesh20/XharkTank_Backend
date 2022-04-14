@@ -29,7 +29,16 @@ function renameIdKey(obj) {
     temp.pitchIdea = obj.pitchIdea;
     temp.askAmount = obj.askAmount;
     temp.equity = obj.equity;
-    temp.offers = obj.offers;
+    temp.offers = [];
+    obj.offers.forEach(offer => {
+        temp.offers.push({
+            id: offer._id,
+            investor: offer.investor,
+            amount: offer.amount,
+            equity: offer.equity,
+            comment: offer.comment
+        });
+    });
     return temp;
 }
 
@@ -39,14 +48,16 @@ app.post('/pitches', (req, res) => {
     if (req.body.equity > 100 || req.body.equity < 0 || req.body.askAmount < 0 || req.body.entrepreneur == "" || req.body.pitchTitle == "" || req.body.pitchIdea == "") {
         res.status(400).send("Invalid Request Body");
     }
-    let newPitch = new pitch(req.body);
-    newPitch.save((err, data) => {  // saving the pitch to the collection after checks
-        if (err) {
-            res.status(400).send("Invalid Request Body");
-        } else {
-            res.status(201).send({ "id": data._id });
-        }
-    });
+    else {
+        let newPitch = new pitch(req.body);
+        newPitch.save((err, data) => {  // saving the pitch to the collection after checks
+            if (err) {
+                res.status(400).send("Invalid Request Body");
+            } else {
+                res.status(201).send({ "id": data._id });
+            }
+        });
+    }
 });
 
 // Endpoint to make a counter offer for a pitch to the backend
@@ -73,7 +84,7 @@ app.post('/pitches/:id/makeOffer', (req, res) => {
 
 // Endpoint to fetch the all the pitches in the reverse chronological order
 app.get('/pitches', (req, res) => {
-    pitch.find({}, null, { sort: { date: -1 } }, (err, data) => {  // finding all pitches in reverse chronological order
+    pitch.find({}, null, { sort: { pitched_at: -1 } }, (err, data) => {  // finding all pitches in reverse chronological order
         if (err) {
             res.status(500).send("Internal Server Error");
         } else {
@@ -94,10 +105,7 @@ app.get('/pitches', (req, res) => {
 // Endpoint to specify a particular id to fetch a single Pitch
 app.get('/pitches/:id', (req, res) => {
     pitch.findById(req.params.id, (err, data) => {
-        if (err) {
-            res.status(500).send("Internal Server Error");
-        }
-        else if (data == null) {
+        if (err || data == null) {
             res.status(404).send("Pitch Not Found");
         }
         else {
