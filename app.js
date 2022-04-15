@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 const PORT = process.env.PORT || 8081;
 
 // saving the pitch collection to a variable
@@ -9,7 +9,7 @@ let pitch = require('./pitchCollection');
 // creating a new express app
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 // connecting to the database
 mongoose.connect('mongodb+srv://ajitesh:Ajitesh2099*&*@cluster0.eka06.mongodb.net/xharktank?retryWrites=true&w=majority');
 let db = mongoose.connection;
