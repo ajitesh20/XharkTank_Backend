@@ -42,6 +42,10 @@ function renameIdKey(obj) {
     return temp;
 }
 
+ap.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
 // Endpoint to post a pitch to the backend
 app.post('/pitches', (req, res) => {
     req.body.offers = [];
@@ -114,7 +118,6 @@ app.get('/pitches/:id', (req, res) => {
         }
     });
 });
-
 
 // status 404 in all other cases
 app.all('*', (req, res) => {
