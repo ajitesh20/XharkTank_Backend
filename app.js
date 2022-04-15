@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 // connecting to the database
-mongoose.connect('mongodb://localhost/xharktank');
+mongoose.connect('mongodb+srv://ajitesh:Ajitesh2099*&*@cluster0.eka06.mongodb.net/xharktank?retryWrites=true&w=majority');
 let db = mongoose.connection;
 
 // checking if the connection is successful
