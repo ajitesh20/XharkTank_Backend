@@ -43,7 +43,7 @@ function renameIdKey(obj) {
     return temp;
 }
 
-ap.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
